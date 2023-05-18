@@ -29,7 +29,7 @@ Chinobot3 会尽可能地保证安全，但是不排除可能存在的漏洞。
 如果你需要输入引号，请使用「\\"」转义。
 
 例如，「/test oimaster akioi "quote with space 114514 1919810" hey \\"quote\\"」将会被解析为：
-指令：test；参数：oimaster, akioi, quote with space 114514 1919810, hey, "quote"`);
+指令：test；参数：oimaster, akioi, quote with space 114514 1919810, hey, "quote");
 });
 
 exports.commands = {
