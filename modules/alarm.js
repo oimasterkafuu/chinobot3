@@ -3,6 +3,7 @@ const { isCommand } = require('../lib/command');
 const fs = require('fs');
 const path = require('path');
 const cron = require('node-cron');
+const { matcher } = require('../lib/matcher');
 
 const alarmPath = path.join(__dirname, '../bot/alarm.json');
 var alarm = {};
@@ -29,7 +30,7 @@ const doCronJob = (cron) => {
     console.log('do cron job');
     for(var key in alarm){
         if(key.split(':')[1] == cron){
-            bot.sendGroupMsg(key.split(':')[0], alarm[key]);
+            bot.sendGroupMsg(key.split(':')[0], matcher(alarm[key]));
         }
     }
 }
@@ -47,8 +48,6 @@ for(var key in alarm){
     }));
     hasCron.push(key.split(':')[1]);
 }
-
-console.log(cronJobs);
 
 bot.on('message.group', (msg) => {
     if (isCommand(msg, 'alarm')) {
@@ -69,7 +68,7 @@ bot.on('message.group', (msg) => {
 {hour} - 时
 {minute} - 分
 {day} - 星期，返回「星期一」的格式
-例如，「今天是 {month} 月 {date} 日，{day}」会被替换为「今天是 5 月 18 日，星期四」。}`);
+例如，「今天是 {month} 月 {date} 日，{day}」会被替换为「${matcher('今天是 {month} 月 {date} 日，{day}')}」。`);
         } else if (msg.args[0] == 'add' && msg.args.length == 3) {
             try {
                 cron.validate(msg.args[1]);
