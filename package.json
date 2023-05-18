@@ -1,0 +1,13 @@
+{
+  "name": "chinobot3",
+  "version": "3.0.0",
+  "description": "Chinobot Version 3",
+  "main": "index.js",
+  "repository": "https://github.com/oimasterkafuu/chinobot3",
+  "author": "oimasterkafuu",
+  "license": "MIT",
+  "dependencies": {
+    "icqq": "^0.3.12",
+    "node-cron": "^3.0.2"
+  }
+}
