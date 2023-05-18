@@ -6,6 +6,9 @@
   "repository": "https://github.com/oimasterkafuu/chinobot3",
   "author": "oimasterkafuu",
   "license": "MIT",
+  "scripts": {
+    "start": "node index.js"
+  },
   "dependencies": {
     "icqq": "^0.3.12",
     "node-cron": "^3.0.2"
