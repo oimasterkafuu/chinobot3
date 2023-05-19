@@ -10,7 +10,9 @@
     "start": "node index.js"
   },
   "dependencies": {
+    "canvas": "^2.11.2",
     "icqq": "^0.3.12",
-    "node-cron": "^3.0.2"
+    "node-cron": "^3.0.2",
+    "selenium-webdriver": "^4.9.2"
   }
 }

@@ -44,6 +44,10 @@ Chinobot3 会尽可能地保证安全，但是不排除可能存在的漏洞。
 ## 搭建
 
 1. 安装 Node.js；
-2. 安装依赖：`yarn install`；
+2. 安装依赖
+```sh
+brew install pkg-config cairo pango libpng jpeg giflib librsvg # macOS
+yarn install
+```
 3. 复制 `config.example.json` 为 `config.json`，并修改其中的配置；
 4. 运行：`yarn start`。
