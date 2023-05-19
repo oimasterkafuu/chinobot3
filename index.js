@@ -6,7 +6,7 @@ const config = JSON.parse(fs.readFileSync(path.join(__dirname, 'config.json')));
 const { isCommand } = require('./lib/command');
 const qq = config.qq;
 const pwd = config.pwd;
-const master = config.master;
+
 
 const client = createClient({ platform: 6 });
 
@@ -66,5 +66,5 @@ client.on('message', (msg) => {
 });
 
 process.on('uncaughtException', function (err) {
-    console.log(err);
+    console.log('Wow! uncaught exception: ' + err);
 });
