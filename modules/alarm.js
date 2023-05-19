@@ -28,8 +28,8 @@ bot.on('message.private', (msg) => {
 
 const doCronJob = (cron) => {
     console.log('do cron job');
-    for(var key in alarm){
-        if(key.split(':')[1] == cron){
+    for (var key in alarm) {
+        if (key.split(':')[1] == cron) {
             bot.sendGroupMsg(key.split(':')[0], matcher(alarm[key]));
         }
     }
@@ -38,8 +38,8 @@ const doCronJob = (cron) => {
 var cronJobs = [];
 var hasCron = [];
 
-for(var key in alarm){
-    if(hasCron.indexOf(key.split(':')[1]) != -1){
+for (var key in alarm) {
+    if (hasCron.indexOf(key.split(':')[1]) != -1) {
         continue;
     }
 
@@ -52,24 +52,7 @@ for(var key in alarm){
 bot.on('message.group', (msg) => {
     if (isCommand(msg, 'alarm')) {
         console.log(msg.args);
-        if (msg.args.length == 0) {
-            msg.reply(`这个命令需要参数哦！
-/alarm add "<cron>" <内容> - 添加一个提醒。
-/alarm remove "<cron>" - 删除一个提醒。
-
-注意：两次输入的 <cron> 相同，后者会覆盖前者。
-因为 cron 的格式包含空格，请记住在输入时 使用引号 包裹。
-如果你不知道 cron 是什么，请参考 https://crontab.guru/
-
-对于 <内容>，可以使用以下变量：
-{year} - 年
-{month} - 月
-{date} - 日
-{hour} - 时
-{minute} - 分
-{day} - 星期，返回「星期一」的格式
-例如，「今天是 {month} 月 {date} 日，{day}」会被替换为「${matcher('今天是 {month} 月 {date} 日，{day}')}」。`);
-        } else if (msg.args[0] == 'add' && msg.args.length == 3) {
+        if (msg.args.length == 3 && msg.args[0] == 'add') {
             try {
                 cron.validate(msg.args[1]);
             } catch (e) {
@@ -92,7 +75,7 @@ bot.on('message.group', (msg) => {
                 cronJobs.push(cron.schedule(msg.args[1], () => { doCronJob(msg.args[1]); }));
             }
             msg.reply('添加成功！');
-        } else if (msg.args[0] == 'remove' && msg.args.length == 2) {
+        } else if (msg.args.length == 2 && msg.args[0] == 'remove') {
             try {
                 try {
                     cron.validate(msg.args[1]);
@@ -127,6 +110,23 @@ bot.on('message.group', (msg) => {
                 console.log(e);
                 msg.reply('删除失败！');
             }
+        } else {
+            msg.reply(`这个命令需要参数哦！
+/alarm add "<cron>" <内容> - 添加一个提醒。
+/alarm remove "<cron>" - 删除一个提醒。
+
+注意：两次输入的 <cron> 相同，后者会覆盖前者。
+因为 cron 的格式包含空格，请记住在输入时 使用引号 包裹。
+如果你不知道 cron 是什么，请参考 https://crontab.guru/
+
+对于 <内容>，可以使用以下变量：
+{year} - 年
+{month} - 月
+{date} - 日
+{hour} - 时
+{minute} - 分
+{day} - 星期，返回「星期一」的格式
+例如，「今天是 {month} 月 {date} 日，{day}」会被替换为「${matcher('今天是 {month} 月 {date} 日，{day}')}」。`);
         }
     }
 });

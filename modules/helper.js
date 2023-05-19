@@ -25,19 +25,12 @@ bot.on('message.private', (msg) => {
 });
 bot.on('message.group', (msg) => {
     if (isCommand(msg, 'helper')) {
-        console.log(msg.args);
-        if (msg.args.length == 0) {
-            msg.reply(`这个命令需要参数哦！
-/helper add <关键词> <回复> - 添加一个快捷回复。可以一次添加多个关键词，在 <关键词> 中通过「|」分割。
-/helper remove <关键词> - 删除一个快捷回复。你需要保证 <关键词> 的唯一性。
-
-注意：当一句消息包含 所有 的关键词，会激活回复。两次输入的 <关键词> 相同，后者会覆盖前者。`);
-        } else if (msg.args[0] == 'add' && msg.args.length == 3) {
+        if (msg.args.length == 3 && msg.args[0] == 'add') {
             helper[msg.group.group_id + ':' + msg.args[1]] = msg.args[2];
             console.log(helper);
             fs.writeFileSync(helperPath, JSON.stringify(helper));
             msg.reply('添加成功！');
-        } else if (msg.args[0] == 'remove' && msg.args.length == 2) {
+        } else if (msg.args.length == 2 && msg.args[0] == 'remove') {
             try {
                 delete helper[msg.group.group_id + ':' + msg.args[1]];
                 fs.writeFileSync(helperPath, JSON.stringify(helper));
@@ -46,6 +39,12 @@ bot.on('message.group', (msg) => {
                 console.log(e);
                 msg.reply('删除失败！');
             }
+        } else {
+            msg.reply(`这个命令需要参数哦！
+/helper add <关键词> <回复> - 添加一个快捷回复。可以一次添加多个关键词，在 <关键词> 中通过「|」分割。
+/helper remove <关键词> - 删除一个快捷回复。你需要保证 <关键词> 的唯一性。
+
+注意：当一句消息包含 所有 的关键词，会激活回复。两次输入的 <关键词> 相同，后者会覆盖前者。`);
         }
     } else {
         for (var key in helper) {
